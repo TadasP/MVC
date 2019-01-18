@@ -21,12 +21,10 @@ if (isset($_SERVER['PATH_INFO'])){
         $object = new $classFile;
         if(!empty($obj_method)){
             $method = $obj_method;
-            if(method_exists($object, $method)){
-                if(!empty($id)){
-                    $object->$method($id);
-                }else{
-                    $object->index();
-                }
+            if(method_exists($object, $method) && !empty($id)){
+                $object->$method($id);
+            }else if(method_exists($object, $method) && empty($id)){
+                $object->$method();
             }else{
                 $classFile = 'ErrorController';
                 include_once 'controllers/'.$classFile.'.php';

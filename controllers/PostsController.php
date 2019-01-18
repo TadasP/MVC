@@ -27,5 +27,13 @@ class PostsController extends Controller
         $posts = new Posts();
         $this->view->title = 'Insert post';
         $this->view->render('insertPost');
+        if(isset($_POST['insert-post'])){
+            $title = $_POST['title'];
+            $slug = strtolower(strtr($_POST['title'], [' ' => '-']));
+            $content = $_POST['content'];
+            $author = $_POST['author'];
+            $time = date("Y-m-d H:i:s");
+            $posts->insertPost($slug, $title, $content, $author, $time);
+        }
     }
 }

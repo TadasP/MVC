@@ -1,6 +1,10 @@
 <html>
     <head>
+        <?php if(isset($this->title)) {?>
         <title><?php echo $this->title ?></title>
+        <?php }else{ ?>
+        <title>404</title>
+        <?php } ?>
         <link rel="stylesheet" type="text/css" href="/2lvl/Tadas/Model-view-controler/views/css/error.css">
         <link rel="stylesheet" type="text/css" href="/2lvl/Tadas/Model-view-controler/views/css/content.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -11,7 +15,7 @@
     </head>
     <body>
         <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom:10px;">
             <a class="navbar-brand" href="#">MVC Page</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

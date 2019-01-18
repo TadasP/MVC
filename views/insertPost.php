@@ -1,38 +1,27 @@
-<div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="basic-addon1">@</span>
+<form id="contact-form" method="post" action="/2lvl/Tadas/Model-view-controler/index.php/posts/insert" role="form" style="height:80vh;">
+  <div class="row">
+      <div class="col-md-6">
+          <div class="form-group">
+              <label for="form_name">Title *</label>
+              <input id="form_name" type="text" name="title" class="form-control" placeholder="Please enter your title*" required="required">
+          </div>
+      </div>
+      <div class="col-md-6"> 
+          <div class="form-group">
+              <label for="form_name">Author *</label>
+              <input id="form_name" type="text" name="author" class="form-control" placeholder="Please enter your nane*" required="required">
+          </div>
+      </div>
   </div>
-  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-</div>
-
-<div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-  <div class="input-group-append">
-    <span class="input-group-text" id="basic-addon2">@example.com</span>
+  <div class="row">
+      <div class="col-md-12">
+          <div class="form-group">
+              <label for="form_message">Content *</label>
+              <textarea id="form_message" name="content" class="form-control" placeholder="Content *" rows="4" required="required"></textarea>
+          </div>
+      </div>
+      <div class="col-md-12">
+          <input type="submit" name="insert-post" class="btn btn-success btn-send" value="Insert Post">
+      </div>
   </div>
-</div>
-
-<label for="basic-url">Your vanity URL</label>
-<div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
-  </div>
-  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-</div>
-
-<div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text">$</span>
-  </div>
-  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-  <div class="input-group-append">
-    <span class="input-group-text">.00</span>
-  </div>
-</div>
-
-<div class="input-group">
-  <div class="input-group-prepend">
-    <span class="input-group-text">With textarea</span>
-  </div>
-  <textarea class="form-control" aria-label="With textarea"></textarea>
-</div>
+</form>
