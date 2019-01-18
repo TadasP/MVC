@@ -1,0 +1,31 @@
+body{
+  background: url("https://mdbootstrap.com/img/Photos/Others/img (50).jpg")no-repeat center center;
+    background-size: cover;
+}
+.view {
+    
+}
+html,
+body,
+header,
+.view {
+  height: 100%;
+}
+
+.index-land{
+  padding-top:100px;
+}
+
+.content-footer{
+  color: white;
+}
+
+.post{
+  
+  margin-bottom:10px;
+}
+
+.post h3{
+  width:100px;
+  margin:auto;
+}
