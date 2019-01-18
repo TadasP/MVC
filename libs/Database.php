@@ -52,8 +52,9 @@ class Database
         foreach ($rows as $row){
             $this->query .= $row.',';
         }
-        substr($this->query,0,-1);
-        $this->query .= ')';
+        $query = $this->query;
+        $this->query = substr($query, 0, -1);
+        $this->query .= ') ';
         return $this;
     }
 
@@ -63,7 +64,8 @@ class Database
         foreach ($values as $value){
             $this->query .= '"'.$value.'",';
         }
-        substr($this->query,0,-1);
+        $query = $this->query;
+        $this->query = substr($query, 0, -1);
         $this->query .=')';
         return $this;
     }
