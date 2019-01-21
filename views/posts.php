@@ -12,7 +12,7 @@
                 <?php $posts = $this->posts; ?>
                 <?php while($post = $posts->fetch_assoc()): ?>
                         <div class="post" style="background-color:#e5e5e5; border-radius:.3rem;">
-                        <h3 style="text-align:center"><?= $post['title']?></h3>
+                        <h3 style="text-align:center; width:80%;"><?= $post['title']?></h3>
                         <p style="padding-left:5px"><?= $post['content']?></p>
                         </div>
                 <?php endwhile ?>
@@ -21,7 +21,7 @@
         <?php endif;?>
         <?php if(isset($this->post)): ?>
         <div class="row">
-                <div class="col-lg-12" style="height:80vh; margin-top:20px;">
+                <div class="col-lg-12" style="margin-top:20px;">
                 <?php $post = $this->post->fetch_assoc(); ?>
                         <div class="post" style="background-color:#e5e5e5; border-radius:.3rem;">
                         <h3 style="text-align:center"><?= $post['title']?></h3>

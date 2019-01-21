@@ -35,6 +35,16 @@ class Posts
         return $db->get();
     }
 
+    public function addPost($slug, $title, $content, $photo, $time)
+    {
+        $db = new Database();
+        $db->insert()
+        ->into('posts')
+        ->row(['`slug`','`title`','`content`','`photo`','`createtime`'])
+        ->value([$slug, $title, $content, $photo, $time]);
+        return $db->get();    
+    }
+
     public function deletePost()
     {
 

@@ -25,32 +25,42 @@ class PostsController extends Controller
 
     public function add()
     {
-        $form = new FormHelper('POST','');
+        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/posts/store');
+       
 
         $form->input([
             'class' => 'form-control col-md-6',
             'name' => 'title',
             'type' => 'text',
             'placeholder' => 'Title'
-        ])->input([
+        ],'Title');
+
+        $form->input([
             'class' => 'form-control col-md-6',
             'name' => 'image',
             'type' => 'text',
             'placeholder' => 'Image URL'
-        ])->input([
+        ],'Image');
+
+        $form->input([
             'class' => 'form-check',
             'name' => 'public',
             'type' => 'checkbox',
             'value' => 1
-        ])->select([
+        ],'Public');
+
+        $form->select([
             'class' => 'form-control col-md-6',
-            'name' => 'workplace'
-        ],['maxima','iki','rimi'])->textarea([
+        ],['maxima','iki','rimi'],'Workplace');
+
+        $form->textarea([
             'class' => 'form-control col-md-6',
             'name' => 'content',
             'rows' => 4,
             'placeholder' => 'Content'
-        ])->input([
+        ], 'Content');
+
+        $form->input([
             'class' => 'btn btn-success btn-send',
             'name' => 'submit',
             'type' => 'submit',
@@ -62,12 +72,33 @@ class PostsController extends Controller
         $this->view->render('posts');
     }
 
-
     public function insert()
     {
-        $posts = new Posts();
         $this->view->title = 'Insert post';
         $this->view->render('insertPost');
+    }
+
+    public function store()
+    {
+        $posts = new Posts();
+
+        if(isset($_POST['submit'])){
+            $title = $_POST['title'];
+            $slug = strtolower(strtr($_POST['title'], [' ' => '-']));
+            $content = $_POST['content'];
+            $photo = $_POST['image'];
+            $time = date("Y-m-d H:i:s");
+            $posts->addPost($slug, $title, $content, $photo, $time);
+            
+        }
+
+        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/index");
+    }
+
+    public function oldStore()
+    {
+        $posts = new Posts();
+
         if(isset($_POST['insert-post'])){
             $title = $_POST['title'];
             $slug = strtolower(strtr($_POST['title'], [' ' => '-']));
@@ -76,5 +107,7 @@ class PostsController extends Controller
             $time = date("Y-m-d H:i:s");
             $posts->insertPost($slug, $title, $content, $author, $time);
         }
+
+        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/index");
     }
 }

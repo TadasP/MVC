@@ -9,42 +9,45 @@ class FormHelper
         $this->form .='<form method="'.$method.'" action="'.$action.'">';
     }
 
-    public function input($attributes)
+    public function input($attributes, $label = '')
     {
         $this->form .= '<div class="form-group">';
+        $this->form .= '<label>'.$label.'</label>';
         $this->form .= '<input ';
             foreach($attributes as $key => $attr){
                 $this->form .= $key.'="'.$attr.'" ';
             }
-        $this->form .= '></br>';
+        $this->form .= '>';
         $this->form .= '</div>';
         return $this;
     }
 
-    public function select($attributes, $options)
+    public function select($attributes, $options, $label = '')
     {
         $this->form .= '<div class="form-group">';
+        $this->form .= '<label>'.$label.'</label>';
         $this->form .= '<select ';
             foreach($attributes as $key => $attr){
                 $this->form .= $key.'="'.$attr.'" ';
             }
-
+            $this->form .= '>';
             foreach($options as $opt){
-                $this->form .= '><option value="'.$opt.'">'.ucfirst($opt).'</option>';
+                $this->form .= '<option value="'.$opt.'">'.ucfirst($opt).'</option>';
             }
-        $this->form .= '</select></br>';
+        $this->form .= '</select>';
         $this->form .= '</div>';
         return $this;
     }
 
-    public function textarea($attributes)
+    public function textarea($attributes, $label = '')
     {
         $this->form .= '<div class="form-group">';
+        $this->form .= '<label>'.$label.'</label>';
         $this->form .= '<textarea ';
             foreach($attributes as $key => $attr){
                 $this->form .= $key.'="'.$attr.'"';
             }
-        $this->form .= '></textarea></br>';
+        $this->form .= '></textarea>';
         $this->form .= '</div>';
         return $this;    
     }

@@ -1,12 +1,13 @@
 body{
-  background: url("https://mdbootstrap.com/img/Photos/Others/img (50).jpg")no-repeat center center;
-    background-size: cover;
+  background: url("https://mdbootstrap.com/img/Photos/Others/img (50).jpg")repeat center center;
+  background-size: cover;
+  position: relative;
+  padding-bottom: 6rem;
 }
 .view {
     
 }
 html,
-body,
 header,
 .view {
   height: 100%;
@@ -21,7 +22,6 @@ header,
 }
 
 .post{
-  
   margin-bottom:10px;
 }
 
