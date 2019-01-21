@@ -6,6 +6,7 @@
                 <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
         </div>
         <?php endif; ?>
+
         <?php if(isset($this->posts)): ?>
         <div class="row">
                 <div class="col-lg-12">
@@ -18,7 +19,8 @@
                 <?php endwhile ?>
                 </div>
         </div>
-        <?php endif;?>
+        <?php endif; ?>
+
         <?php if(isset($this->post)): ?>
         <div class="row">
                 <div class="col-lg-12" style="margin-top:20px;">
@@ -30,6 +32,7 @@
                 </div>        
         </div>
         <?php endif; ?>
+
         <?php if(isset($this->form)): ?>
         <?php echo $this->form ?>
         <?php endif; ?>

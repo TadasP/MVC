@@ -57,5 +57,4 @@ class FormHelper
         $this->form .= '</form>';
         return $this->form;
     }
-
 }
