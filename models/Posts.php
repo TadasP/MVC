@@ -30,7 +30,7 @@ class Posts
         $db = new Database();
         $db->insert()
         ->into('posts')
-        ->row(['slug','title','content','author_id','createtime'])
+        ->row(['`slug`','`title`','`content`','`author_id`','`createtime`'])
         ->value([$slug, $title, $content, $author, $time]);
         return $db->get();
     }

@@ -62,7 +62,7 @@ class Database
     {
         $this->query .='VALUES (';
         foreach ($values as $value){
-            $this->query .= '"'.$value.'",';
+            $this->query .= "'".$value."',";
         }
         $query = $this->query;
         $this->query = substr($query, 0, -1);

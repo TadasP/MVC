@@ -2,6 +2,7 @@
 
 include_once url.'libs/Controller.php';
 include_once url.'models/Posts.php';
+include_once url.'helpers/FormHelper.php';
 
 class PostsController extends Controller
 {
@@ -21,6 +22,46 @@ class PostsController extends Controller
         $this->view->post = $posts->getPostById($id);
         $this->view->render('posts');
     }
+
+    public function add()
+    {
+        $form = new FormHelper('POST','');
+
+        $form->input([
+            'class' => 'form-control col-md-6',
+            'name' => 'title',
+            'type' => 'text',
+            'placeholder' => 'Title'
+        ])->input([
+            'class' => 'form-control col-md-6',
+            'name' => 'image',
+            'type' => 'text',
+            'placeholder' => 'Image URL'
+        ])->input([
+            'class' => 'form-check',
+            'name' => 'public',
+            'type' => 'checkbox',
+            'value' => 1
+        ])->select([
+            'class' => 'form-control col-md-6',
+            'name' => 'workplace'
+        ],['maxima','iki','rimi'])->textarea([
+            'class' => 'form-control col-md-6',
+            'name' => 'content',
+            'rows' => 4,
+            'placeholder' => 'Content'
+        ])->input([
+            'class' => 'btn btn-success btn-send',
+            'name' => 'submit',
+            'type' => 'submit',
+            'value' => 'Add'
+        ]);
+
+        $this->view->title = 'Add';
+        $this->view->form = $form->get();
+        $this->view->render('posts');
+    }
+
 
     public function insert()
     {

@@ -30,4 +30,7 @@
                 </div>        
         </div>
         <?php endif; ?>
+        <?php if(isset($this->form)): ?>
+        <?php echo $this->form ?>
+        <?php endif; ?>
 </div>
