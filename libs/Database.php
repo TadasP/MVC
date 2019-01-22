@@ -8,12 +8,6 @@ class Database
     public function connect()
     {
         $this->conn = mysqli_connect('localhost', 'root', '', 'mvc_php');
-
-        if(!$this->conn){
-            echo "Error: Unable to connect to MySQL.".PHP_EOl;
-            echo "Debugging error" .mysqli_connect_errno().PHP_EOl;
-            exit; 
-        }
     }
 
     public function select($target = '*')
@@ -70,6 +64,18 @@ class Database
         return $this;
     }
 
+    public function set($values)
+    {
+        $this->query .='SET ';
+        foreach ($values as $key => $value){
+            $this->query .= $key."="." '".$value."',";
+        }
+        $query = $this->query;
+        $this->query = substr($query, 0, -1);
+        $this->query .= ' ';
+        return $this;
+    }
+
     public function from($tableName)
     {
         $this->query .='FROM '.$tableName.' ';
@@ -78,7 +84,7 @@ class Database
 
     public function where($field, $value, $operator = '=')
     {
-        $this->query .='WHERE '.$field.' '.$operator.' '.$value.' ';
+        $this->query .='WHERE '.$field.' '.$operator.' "'.$value.'" ';
         return $this;
     }
 

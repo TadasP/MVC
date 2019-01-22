@@ -39,7 +39,7 @@ class FormHelper
         return $this;
     }
 
-    public function textarea($attributes, $label = '')
+    public function textarea($attributes, $label = '', $value = '')
     {
         $this->form .= '<div class="form-group">';
         $this->form .= '<label>'.$label.'</label>';
@@ -47,7 +47,7 @@ class FormHelper
             foreach($attributes as $key => $attr){
                 $this->form .= $key.'="'.$attr.'"';
             }
-        $this->form .= '></textarea>';
+        $this->form .= '>'.$value.'</textarea>';
         $this->form .= '</div>';
         return $this;    
     }

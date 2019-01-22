@@ -35,7 +35,7 @@
                     <a class="nav-link" href="/2lvl/Tadas/Model-view-controler/index.php/posts/insert">Insert Post</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/2lvl/Tadas/Model-view-controler/index.php/posts/add">Add</a>
+                    <a class="nav-link" href="/2lvl/Tadas/Model-view-controler/index.php/posts/add">Add Post</a>
                 </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">

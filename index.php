@@ -10,7 +10,7 @@ if (isset($_SERVER['PATH_INFO'])){
 
     $controller = !empty($path[1]) ? $path[1] : NULL;
     $obj_method = !empty($path[2]) ? $path[2] : NULL;
-    $id = !empty($path[3]) ? $path[3] : NULL;
+    $var = !empty($path[3]) ? $path[3] : NULL;
 
     if(isset($controller)){
         $classFile = ucfirst($controller).'Controller';
@@ -21,9 +21,9 @@ if (isset($_SERVER['PATH_INFO'])){
         $object = new $classFile;
         if(!empty($obj_method)){
             $method = $obj_method;
-            if(method_exists($object, $method) && !empty($id)){
-                $object->$method($id);
-            }else if(method_exists($object, $method) && empty($id)){
+            if(method_exists($object, $method) && !empty($var)){
+                $object->$method($var);
+            }else if(method_exists($object, $method) && empty($var)){
                 $object->$method();
             }else{
                 $classFile = 'ErrorController';

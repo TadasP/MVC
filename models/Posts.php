@@ -45,8 +45,22 @@ class Posts
         return $db->get();    
     }
 
+    public function updatePost($id, $slug, $title, $content, $photo, $time)
+    {
+        $db = new Database();
+        $db->update('posts')
+        ->set([
+            '`slug`' => $slug,
+            '`title`' => $title,
+            '`content`' => $content,
+            '`photo`' => $photo,
+            '`createtime`' => $time
+        ])->where('id',$id);
+        return $db->get();
+    }
     public function deletePost()
     {
 
     }
+
 }

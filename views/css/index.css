@@ -27,3 +27,7 @@ header,
   width:100px;
   margin:auto;
 }
+
+.hide {
+  display: none;
+}
