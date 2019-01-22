@@ -7,7 +7,7 @@ class Posts
     public function getAllPosts()
     {
         $db = new Database();
-        $db->select()->from('posts');
+        $db->select()->from('posts')->where('active', 1);
         return $db->get();
     }
 
@@ -58,9 +58,14 @@ class Posts
         ])->where('id',$id);
         return $db->get();
     }
-    public function deletePost()
+    public function deletePost($id)
     {
-
+        $db = new Database();
+        $db->update('posts')
+        ->set([
+            '`active`' => 0,
+        ])->where('id',$id);
+        return $db->get();
     }
 
 }

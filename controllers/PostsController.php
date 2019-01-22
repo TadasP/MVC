@@ -11,7 +11,12 @@ class PostsController extends Controller
     {
         $posts = new Posts();
         $this->view->title = 'Posts';
-        $this->view->posts = $posts->getAllPosts();
+        $posts = $posts->getAllPosts();
+        $postsView = [];
+        while($post = $posts->fetch_assoc()){
+            $postsView[] =  $post;
+        }
+        $this->view->posts = $postsView;
         $this->view->headline = 'Posts';
         $this->view->render('posts');
     }
@@ -21,10 +26,13 @@ class PostsController extends Controller
         $posts = new Posts();
         $this->view->title = 'Post';
         if(is_numeric($var)){
-            $this->view->post = $posts->getPostById($var);
+            $post = $posts->getPostById($var);
         }else{
-            $this->view->post = $posts->getPostBySlug($var);
+            $post = $posts->getPostBySlug($var);
         }
+
+        $postView = $post->fetch_assoc();
+        $this->view->post = $postView;
         $this->view->render('posts');
     }
 
@@ -168,11 +176,14 @@ class PostsController extends Controller
         header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/index");
     }
 
-    public function delete()
+    public function delete($id)
     {
-        if(isset($_POST['delete'])){
-            $posts->updatePost($id, $slug, $title, $content, $photo, $time);
+        $posts = new Posts();
+
+        if(isset($_POST['delete-post'])){
+            $posts->deletePost($id);
         }
+
         header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/index");
     }
 
