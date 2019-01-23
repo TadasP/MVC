@@ -32,20 +32,29 @@ class Users
         return $db->get();
     }
 
-    public function registrate($email, $name, $password)
+    public function getUserByPassword($password)
+    {
+        $db = new Database();
+        $db->select()->from('users')->where('password',$password);
+        return $db->get();
+    }
+
+    public function getUserIdByEmail($email)
+    {
+        $db = new Database();
+        $db->select('id')->from('users')->where('email',$email);
+        return $db->get();
+    }
+
+
+    public function registrate($name, $email, $password)
     {
         $db = new Database();
         $db->insert()
-        ->into('users')
-        ->row(['`email`','`name`','`password`'])
-        ->value([$email, $name, $password]);
+            ->into('users')
+            ->row(['`name`','`email`','`password`'])
+            ->value([$name, $email, $password]);
         return $db->get();    
     }
 
-    public function login($email, $password)
-    {
-
-    }
 }
-
-// coments-table (id, content, author_id, post_id

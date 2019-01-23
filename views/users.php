@@ -7,7 +7,21 @@
         </div>
         <?php endif; ?>
         
-        <?php if(isset($this->form)): ?>
-        <?= $this->form ?>
+        <?php if(isset($this->registrationForm)): ?>
+        <?= $this->registrationForm ?>
         <?php endif; ?>
+
+        <?php if(isset($this->loginForm)): ?>
+        <?= $this->loginForm ?>
+        <?php endif; ?>
+
+        <?php if(isset($_SESSION['error_message'])): ?>
+        <div class="alert alert-danger col-md-6" role="alert">
+        <?= $_SESSION['error_message']; ?>
+        </div>
+        <?php $_SESSION['error_message'] == NULL ?>
+        <?php endif; ?>
+        <?php if(isset($_SESSION['loggedIn'])): ?>
+        <?php echo $_SESSION['loggenIn'] ?>
+        <?php endif ?>
 </div>

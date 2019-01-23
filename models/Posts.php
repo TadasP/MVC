@@ -29,9 +29,9 @@ class Posts
     {
         $db = new Database();
         $db->insert()
-        ->into('posts')
-        ->row(['`slug`','`title`','`content`','`author_id`','`createtime`'])
-        ->value([$slug, $title, $content, $author, $time]);
+            ->into('posts')
+            ->row(['`slug`','`title`','`content`','`author_id`','`createtime`'])
+            ->value([$slug, $title, $content, $author, $time]);
         return $db->get();
     }
 
@@ -39,9 +39,9 @@ class Posts
     {
         $db = new Database();
         $db->insert()
-        ->into('posts')
-        ->row(['`slug`','`title`','`content`','`photo`','`createtime`'])
-        ->value([$slug, $title, $content, $photo, $time]);
+            ->into('posts')
+            ->row(['`slug`','`title`','`content`','`photo`','`createtime`'])
+            ->value([$slug, $title, $content, $photo, $time]);
         return $db->get();    
     }
 
@@ -49,22 +49,24 @@ class Posts
     {
         $db = new Database();
         $db->update('posts')
-        ->set([
+            ->set([
             '`slug`' => $slug,
             '`title`' => $title,
             '`content`' => $content,
             '`photo`' => $photo,
             '`createtime`' => $time
-        ])->where('id',$id);
+            ])  
+            ->where('id',$id);
         return $db->get();
     }
     public function deletePost($id)
     {
         $db = new Database();
         $db->update('posts')
-        ->set([
+            ->set([
             '`active`' => 0,
-        ])->where('id',$id);
+            ])
+            ->where('id',$id);
         return $db->get();
     }
 

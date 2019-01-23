@@ -31,7 +31,7 @@ class UsersController extends Controller
 
     public function registration()
     {
-        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/posts/storeUser');
+        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/users/storeUser');
 
         $form->input([
             'class' => 'form-control col-md-6',
@@ -43,7 +43,7 @@ class UsersController extends Controller
         $form->input([
             'class' => 'form-control col-md-6',
             'name' => 'email',
-            'type' => 'text',
+            'type' => 'email',
             'placeholder' => 'Email'
         ],'Email');
 
@@ -69,7 +69,7 @@ class UsersController extends Controller
         ]);
 
         $this->view->title = 'Registration';
-        $this->view->form = $form->get();
+        $this->view->registrationForm = $form->get();
         $this->view->render('users');
     }
 
@@ -82,13 +82,91 @@ class UsersController extends Controller
             $email = !empty($_POST['email']) ? $_POST['email'] : NULL;
             $password = !empty($_POST['password']) ? $_POST['password'] : NULL;
             $rpassword = !empty($_POST['rpassword']) ? $_POST['rpassword'] : NULL;
+
             if(isset($name) && isset($email) && isset($password) && isset($rpassword)){
-                
+                $nameCheck = $posts->getUserByName($name);
+                $emailCheck = $posts->getUserByEmail($email);
+                if (!mysqli_num_rows($nameCheck) > 0 && !mysqli_num_rows($emailCheck) > 0){
+
+                    if($password == $rpassword){
+                        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                        $posts->registrate($name, $email, $passwordHash);
+                    }else{
+                        $_SESSION['error_message'] = 'Slaptažodžiai nesutampa';
+                        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/registration");
+                        die();
+                    }
+                }else{
+                    $_SESSION['error_message'] = 'Norimas vardas arba emailas užimtas';
+                    header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/registration");
+                    die();
+                }
+            }else{
+                $_SESSION['error_message'] = 'Užpildykite visus laukelius';
+                header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/registration");
+                die();
             }
-            $posts->registrate($name, $email, $password);
         }
 
         header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/index");
     }
 
+    public function login()
+    {
+        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/users/loginUser');
+
+        $form->input([
+            'class' => 'form-control col-md-6',
+            'name' => 'email',
+            'type' => 'email',
+            'placeholder' => 'Email'
+        ],'Name');
+
+        $form->input([
+            'class' => 'form-control col-md-6',
+            'name' => 'password',
+            'type' => 'password',
+            'placeholder' => 'Password'
+        ],'Email');
+
+        $form->input([
+            'class' => 'btn btn-success btn-send',
+            'name' => 'login',
+            'type' => 'submit',
+            'value' => 'Login'
+        ]);
+        
+        $this->view->title = 'Login';
+        $this->view->loginForm = $form->get();
+        $this->view->render('users');
+    }
+
+    public function loginUser()
+    {
+        $users = new Users();
+
+        if(isset($_POST['login'])){
+            $email = !empty($_POST['email']) ? $_POST['email'] : NULL;
+            $password = !empty($_POST['password']) ? $_POST['password'] : NULL;
+
+            if(isset($email) && isset($password)){
+                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                $emaiCheck = $users->getUserByEmail($email);
+                $passwordCheck = $users->getUserByPassword($passwordHash);
+
+                if (mysqli_num_rows($passwordCheck) > 0 && mysqli_num_rows($emailCheck) > 0){     
+                    $_SESSION['loggedIn'] = getUserIdByEmail($email);               
+                }else{
+                    $_SESSION['error_message'] = 'Nesutampa emailas arba slaptažodis';
+                    header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/registration");
+                    die();
+                }
+            }else{
+                $_SESSION['error_message'] = 'Užpildykite visus laukelius';
+                header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/registration");
+                die();
+            }
+        }   
+        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/index");    
+    }
 }

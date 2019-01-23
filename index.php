@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 define('url','/wamp/www/2lvl/Tadas/Model-view-controler/');
 
 if (isset($_SERVER['PATH_INFO'])){

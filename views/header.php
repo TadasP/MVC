@@ -40,7 +40,7 @@
                 </ul>
                 <ul class="navbar-nav mr-auto" style="margin:0!important;">
                 <li class="nav-item float-right">
-                    <a class="nav-link" href="/2lvl/Tadas/Model-view-controler/index.php/users/registrate">Registration</a>
+                    <a class="nav-link" href="/2lvl/Tadas/Model-view-controler/index.php/users/registration">Registration</a>
                 </li>
                 <li class="nav-item float-right">
                     <a class="nav-link" href="/2lvl/Tadas/Model-view-controler/index.php/users/login">Login</a>

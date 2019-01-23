@@ -119,7 +119,7 @@ class PostsController extends Controller
             'type' => 'text',
             'placeholder' => 'Title',
             'value' => $info['title']
-        ],'Title');
+        ],'Title*');
 
         $form->input([
             'class' => 'form-control col-md-6',
@@ -127,7 +127,7 @@ class PostsController extends Controller
             'type' => 'text',
             'placeholder' => 'Image URL',
             'value' => $info['photo']
-        ],'Image');
+        ],'Image*');
 
         $form->input([
             'class' => 'form-check',
@@ -145,7 +145,7 @@ class PostsController extends Controller
             'name' => 'content',
             'rows' => 4,
             'placeholder' => 'Content',
-        ], 'Content', $info['content']);
+        ], 'Content*', $info['content']);
 
         $form->input([
             'class' => 'btn btn-success btn-send',
@@ -154,7 +154,7 @@ class PostsController extends Controller
             'value' => 'Update'
         ]);
 
-        $this->view->title = 'Add';
+        $this->view->title = 'Edit';
         $this->view->form = $form->get();
         $this->view->render('posts');
 
