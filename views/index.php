@@ -1,3 +1,3 @@
-<div class="container text-center white-text">
-  <h2>Welcome To MVC Test</h2>
+<div class="container text-center white-text" style="margin-top:150px;">
+  <h1>Welcome To MVC Test</h1>
 </div>

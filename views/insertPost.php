@@ -1,4 +1,4 @@
-<form id="contact-form" method="post" action="/2lvl/Tadas/Model-view-controler/index.php/posts/oldStore" role="form">
+<form id="contact-form" method="post" action="/2lvl/Tadas/Model-view-controler/index.php/posts/oldStorePost" role="form">
   <div class="row">
       <div class="col-md-6">
           <div class="form-group">

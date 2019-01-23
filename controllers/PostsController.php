@@ -38,7 +38,7 @@ class PostsController extends Controller
 
     public function add()
     {
-        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/posts/store');
+        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/posts/storePost');
        
         $form->input([
             'class' => 'form-control col-md-6',
@@ -90,7 +90,7 @@ class PostsController extends Controller
         $this->view->render('insertPost');
     }
 
-    public function store()
+    public function storePost()
     {
         $posts = new Posts();
 
@@ -160,7 +160,7 @@ class PostsController extends Controller
 
     }
 
-    public function update($id)
+    public function updatePost($id)
     {
         $posts = new Posts();
 
@@ -176,7 +176,7 @@ class PostsController extends Controller
         header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/index");
     }
 
-    public function delete($id)
+    public function deletePost($id)
     {
         $posts = new Posts();
 
@@ -187,7 +187,7 @@ class PostsController extends Controller
         header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/index");
     }
 
-    public function oldStore()
+    public function oldStorePost()
     {
         $posts = new Posts();
 
