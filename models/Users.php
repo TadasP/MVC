@@ -46,6 +46,26 @@ class Users
         return $db->get();
     }
 
+    public function getUserPasswordByEmail($email)
+    {
+        $db = new Database();
+        $db->select('password')->from('users')->where('email',$email);
+        return $db->get();    
+    }
+
+    public function getAllPostsByUserId($id)
+    {
+        $db = new Database();
+        $db->select()->from('posts')->where('author_id',$id);
+        return $db->get();
+    }
+
+    public function getAllPostsByUserName($name)
+    {
+        $db = new Database();
+        $db->select()->from('posts')->where('name',$name);
+        return $db->get();
+    }
 
     public function registrate($name, $email, $password)
     {

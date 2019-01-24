@@ -25,23 +25,13 @@ class Posts
         return $db->get();
     }
 
-    public function insertPost($slug, $title, $content, $author, $time)
+    public function addPost($slug, $title, $content, $photo, $time, $author_id)
     {
         $db = new Database();
         $db->insert()
             ->into('posts')
-            ->row(['`slug`','`title`','`content`','`author_id`','`createtime`'])
-            ->value([$slug, $title, $content, $author, $time]);
-        return $db->get();
-    }
-
-    public function addPost($slug, $title, $content, $photo, $time)
-    {
-        $db = new Database();
-        $db->insert()
-            ->into('posts')
-            ->row(['`slug`','`title`','`content`','`photo`','`createtime`'])
-            ->value([$slug, $title, $content, $photo, $time]);
+            ->row(['`slug`','`title`','`content`','`photo`','`createtime`','`author_id`'])
+            ->value([$slug, $title, $content, $photo, $time, $author_id]);
         return $db->get();    
     }
 

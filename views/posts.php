@@ -23,11 +23,18 @@
                 <div class="col-lg-12" style="margin-top:20px;">
                         <div class="post" style="background-color:#e5e5e5; border-radius:.3rem;">
                         <h3 style="text-align:center; width:80%;"><?= $this->post['title']?></h3>
+                        <?php if(isset($this->post['photo'])): ?>
+                                <img src="<?=$this->post['photo'] ?>" alt="post picture">
+                        <?php endif; ?>
                         <p style="padding-left:5px"><?= $this->post['content']?></p>
-                        <form method="POST" action="http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/delete/<?= $this->post['id'] ?>" class="float-right">
-                                <input type="submit" name="delete-post" class="btn btn-danger btn-sm btn-send confirm-delete" value="Delete">
-                        </form>
-                        <a href="http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/edit/<?= $this->post['id'] ?>"><button type="button" class="btn btn-primary btn-sm float-right mr-2">Edit</button></a>
+                        <?php if(isset($_SESSION['loggedIn'])): ?>
+                                <?php if($this->post['author_id'] === $_SESSION['loggedIn']): ?>
+                                        <form method="POST" action="http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/delete/<?= $this->post['id'] ?>" class="float-right">
+                                                <input type="submit" name="delete-post" class="btn btn-danger btn-sm btn-send confirm-delete" value="Delete">
+                                        </form>
+                                        <a href="http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/edit/<?= $this->post['id'] ?>"><button type="button" class="btn btn-primary btn-sm float-right mr-2">Edit</button></a>
+                                <?php endif; ?>
+                        <?php endif; ?>
                         </div>
                 </div>             
         </div>

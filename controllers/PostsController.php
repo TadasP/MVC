@@ -84,12 +84,6 @@ class PostsController extends Controller
         $this->view->render('posts');
     }
 
-    public function insert()
-    {
-        $this->view->title = 'Insert post';
-        $this->view->render('insertPost');
-    }
-
     public function storePost()
     {
         $posts = new Posts();
@@ -100,7 +94,8 @@ class PostsController extends Controller
             $content = $_POST['content'];
             $photo = $_POST['image'];
             $time = date("Y-m-d H:i:s");
-            $posts->addPost($slug, $title, $content, $photo, $time);
+            $author_id = $_SESSION['loggedIn'];
+            $posts->addPost($slug, $title, $content, $photo, $time, $author_id);
         }
 
         header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/index");
@@ -187,19 +182,4 @@ class PostsController extends Controller
         header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/index");
     }
 
-    public function oldStorePost()
-    {
-        $posts = new Posts();
-
-        if(isset($_POST['insert-post'])){
-            $title = $_POST['title'];
-            $slug = Helper::getSlug($_POST['title']);
-            $content = $_POST['content'];
-            $author = $_POST['author'];
-            $time = date("Y-m-d H:i:s");
-            $posts->insertPost($slug, $title, $content, $author, $time);
-        }
-
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/index");
-    }
 }
