@@ -90,7 +90,7 @@ class Database
 
     public function whereAnd($field, $value, $operator = '=')
     {
-        $this->query .='AND '.$field.' '.$operator.' '.$value.' ';
+        $this->query .='AND '.$field.' '.$operator.' "'.$value.'" ';
         return $this;
     }
 
@@ -105,4 +105,6 @@ class Database
         $result = mysqli_query($this->conn, $this->query);
         return $result;
     }
+
+    //"SELECT * FROM comments JOIN users ON user_id = author_id WHERE post_id = $id"
 }

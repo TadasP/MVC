@@ -33,6 +33,24 @@ class PostsController extends Controller
 
         $postView = $post->fetch_assoc();
         $this->view->post = $postView;
+
+        if(is_numeric($var)){
+            $comments = $posts->getAllCommentsByPostId($var);
+        }else{
+            $id = getPostIdBySlug($var);
+            $id = $id->fetch_assoc();
+            $comments = $posts->getAllCommentsByPostId($id['id']);
+        }
+
+    
+        $commentsView = [];
+        $author_ids = [];
+        
+        while($comment = $comments->fetch_assoc()){
+            $commentsView[] =  $comment;
+        }
+        $this->view->comments = $commentsView;
+
         $this->view->render('posts');
     }
 

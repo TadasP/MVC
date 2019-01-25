@@ -22,11 +22,12 @@
         <div class="row">
                 <div class="col-lg-12" style="margin-top:20px;">
                         <div class="post" style="background-color:#e5e5e5; border-radius:.3rem;">
-                        <h3 style="text-align:center; width:80%;"><?= $this->post['title']?></h3>
-                        <?php if(isset($this->post['photo'])): ?>
-                                <img src="<?=$this->post['photo'] ?>" alt="post picture">
+                        <h1 style="text-align:center;"><?= $this->post['title']?></h1>
+                        <?php if(($this->post['photo']) !== NULL): ?>
+                                <img style="display:block; width:400px; margin:20px auto;" src="<?=$this->post['photo'] ?>" alt="post picture">
                         <?php endif; ?>
-                        <p style="padding-left:5px"><?= $this->post['content']?></p>
+
+                        <p style="padding:10px 10px"><?= $this->post['content']?></p>
                         <?php if(isset($_SESSION['loggedIn'])): ?>
                                 <?php if($this->post['author_id'] === $_SESSION['loggedIn']): ?>
                                         <form method="POST" action="http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/delete/<?= $this->post['id'] ?>" class="float-right">
@@ -38,6 +39,26 @@
                         </div>
                 </div>             
         </div>
+        <?php if(isset($this->comments)): ?>
+        <div class="row">
+                <div class="col-lg-12">
+                        <?php foreach($this->comments as $comment): ?>
+                                <div class="post" style="background-color:#e5e5e5; border-radius:.3rem; margin:10px auto;">
+                                <h3></h3>
+                                <p style="padding:10px 10px"><?= $comment['content']?></p>
+                                </div>
+                        <?php endforeach ?>
+                        </div>
+                </div>
+        </div>
+        <?php endif; ?>
+        <?php if(isset($_SESSION['loggedIn'])): ?>
+                <div class="row">
+                        <div class="col-lg-12" style="margin-top:20px; ">
+                                <a href="http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/comments/addComment/<?= $this->post['id'] ?>"><button type="button" class="btn btn-success">Add Comment</button></a>
+                        </div>
+                </div>
+        <?php endif; ?>
         <?php endif; ?>
         <?php if(isset($this->form)): ?>
         <?= $this->form ?>

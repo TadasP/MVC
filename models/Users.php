@@ -46,24 +46,31 @@ class Users
         return $db->get();
     }
 
-    public function getUserPasswordByEmail($email)
+    public function getUserInfoByEmail($email, $password)
     {
         $db = new Database();
-        $db->select('password')->from('users')->where('email',$email);
+        $db->select()->from('users')->where('email',$email)->whereAnd('password',$password)->whereAnd('active',1);
         return $db->get();    
     }
 
     public function getAllPostsByUserId($id)
     {
         $db = new Database();
-        $db->select()->from('posts')->where('author_id',$id);
+        $db->select()->from('posts')->where('author_id',$id)->whereAnd('active',1);
         return $db->get();
     }
 
     public function getAllPostsByUserName($name)
     {
         $db = new Database();
-        $db->select()->from('posts')->where('name',$name);
+        $db->select()->from('posts')->where('name',$name)->whereAnd('active',1);
+        return $db->get();
+    }
+
+    public function checkIfUserActiveByEmail($email)
+    {
+        $db = new Database();
+        $db->select('active')->from('posts')->where('email',$email);
         return $db->get();
     }
 
@@ -77,4 +84,48 @@ class Users
         return $db->get();    
     }
 
+    public function delete($id)
+    {
+        $db = new Database();
+        $db->update('users')
+            ->set([
+            '`active`' => 0,
+            ])
+            ->where('id',$id);
+        return $db->get();
+    }
+
+    public function updateName($name, $id)
+    {
+        $db = new Database();
+        $db->update('users')
+            ->set([
+            '`name`' => $name
+            ])  
+            ->where('id',$id);
+        return $db->get();
+    }
+
+    public function updateEmail($email, $id)
+    {
+        $db = new Database();
+        $db->update('users')
+            ->set([
+            '`email`' => $email
+            ])  
+            ->where('id',$id);
+        return $db->get();
+    }
+    
+    public function updatePassword($password, $id)
+    {
+        $db = new Database();
+        $db->update('users')
+            ->set([
+            '`password`' => $password
+            ])  
+            ->where('id',$id);
+        return $db->get();
+    }
+    
 }

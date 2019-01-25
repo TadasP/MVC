@@ -2,7 +2,6 @@ $(document).ready(function(){
 
     $('#registrate').click(function(){
 
-        event.preventDefault();
         var name = $('#registrationName').val();
         var email = $('#registrationEmail').val();
         var password = $('#registrationPassword').val();

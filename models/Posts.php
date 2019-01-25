@@ -60,4 +60,24 @@ class Posts
         return $db->get();
     }
 
+    public function getAllCommentsByPostId($id)
+    {
+        $db = new Database();
+        $db->select()->from('comments')->where('post_id', $id);
+        return $db->get();
+    }
+
+    public function getPostIdBySlug($slug)
+    {
+        $db = new Database();
+        $db->select('id')->from('posts')->where('slug', $slug);
+        return $db->get();
+    }
+
+    public function getUserNameByUserId($id)
+    {
+        $db = new Database();
+        $db->select('name')->from('users')->where('id', $id);
+        return $db->get();
+    }
 }

@@ -17,7 +17,7 @@
     </head>
     <body>
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom:10px;">
-            <a class="navbar-brand" href="#">MVC Page</a>
+            <a class="navbar-brand" href="/2lvl/Tadas/Model-view-controler/index.php/index/index">MVC Page</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

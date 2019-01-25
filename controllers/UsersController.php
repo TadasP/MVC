@@ -87,7 +87,6 @@ class UsersController extends Controller
         ],'Password again');
 
         $form->input([
-            'id' => 'registrate',
             'class' => 'btn btn-success btn-send',
             'name' => 'registrate',
             'type' => 'submit',
@@ -115,18 +114,21 @@ class UsersController extends Controller
                 if (!mysqli_num_rows($nameCheck) > 0 && !mysqli_num_rows($emailCheck) > 0){
 
                     if($password === $rpassword){
-                        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                        $passwordHash = Helper::generatePassword($password);
                         $posts->registrate($name, $email, $passwordHash);
                     }else{
-                        echo 'Slaptažodžiai nesutampa';
+                        $_SESSION['error'] = 'Slaptažodžiai nesutampa';
+                        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/registration");
                         die();
                     }
                 }else{
-                    echo 'Norimas vardas arba emailas užimtas';
+                    $_SESSION['error'] = 'Norimas vardas arba emailas užimtas';
+                    header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/registration");
                     die();
                 }
             }else{
-                echo 'Užpildykite visus laukelius';
+                $_SESSION['error'] = 'Užpildykite visus laukeliu';
+                header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/registration");
                 die();
             }
         }
@@ -170,16 +172,14 @@ class UsersController extends Controller
 
         if(isset($_POST['login'])){
             $email = !empty($_POST['email']) ? $_POST['email'] : NULL;
-            $typedPassword = !empty($_POST['password']) ? $_POST['password'] : NULL;
+            $password = !empty($_POST['password']) ? $_POST['password'] : NULL;
 
-            if(isset($email) && isset($typedPassword)){
-                $emailCheck = $users->getUserByEmail($email);
+            if(isset($email) && isset($password)){
+                $passwordHash = Helper::generatePassword($password);
 
-                $passwordHash = password_hash($typedPassword, PASSWORD_DEFAULT);
-                $password = $users->getUserPasswordByEmail($email);
-                $password = $password->fetch_assoc();
+                $validation = $users->getUserInfoByEmail($email, $passwordHash);
 
-                if (password_verify($typedPassword, $password['password']) && mysqli_num_rows($emailCheck) > 0){
+                if (mysqli_num_rows($validation) > 0){
                     $id = $users->getUserIdByEmail($email);
                     $id = $id->fetch_assoc();     
                     $_SESSION['loggedIn'] = $id['id'];
@@ -187,10 +187,14 @@ class UsersController extends Controller
                     $email = $email->fetch_assoc();
                     $_SESSION['email'] = $email['email'];            
                 }else{
-                    return;
+                    $_SESSION['error'] = 'Neteisingas emailas arba slaptažodis';
+                    header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/login");  
+                    die();  
                 }
             }else{
-                return;
+                $_SESSION['error'] = 'Užpildykite visus laukeliu';
+                header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/login");
+                die();    
             }
         }   
         header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/index");    
@@ -200,6 +204,151 @@ class UsersController extends Controller
     {
         unset($_SESSION['loggedIn']);
         unset($_SESSION['email']);
+
         header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/index/index");
     }
+
+    public function deleteUser($id)
+    {
+        $users = new Users();
+        
+        if(isset($_POST['delete-user'])){
+            $users->delete($id);
+        }
+
+        unset($_SESSION['loggedIn']);
+        unset($_SESSION['email']);
+
+        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/index");
+    }
+
+    public function editName($id)
+    {
+        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/users/updateName/'.$id);
+        $users = new Users();
+        $user = $users->getUserById($id);
+        $user = $user->fetch_assoc();
+
+        $form->input([
+            'class' => 'form-control col-md-6',
+            'name' => 'name',
+            'type' => 'text',
+            'placeholder' => 'Name',
+            'value' => $user['name']
+        ],'Name');
+
+        $form->input([
+            'class' => 'btn btn-success btn-send',
+            'name' => 'update-name',
+            'type' => 'submit',
+            'value' => 'Update'
+        ]);
+
+        $this->view->title = 'EditName';
+        $this->view->editForm = $form->get();
+        $this->view->render('users');
+    }
+
+    public function updateName($id)
+    {
+        $users = new Users();
+
+        if(isset($_POST['update-name'])){
+            $name = $_POST['name'];
+            $users->updateName($name, $id);
+        }
+
+        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/show/".$id);
+    }
+
+    public function editEmail($id)
+    {
+        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/users/updateEmail/'.$id);
+        $users = new Users();
+        $user = $users->getUserById($id);
+        $user = $user->fetch_assoc();
+
+        $form->input([
+            'class' => 'form-control col-md-6',
+            'name' => 'email',
+            'type' => 'text',
+            'placeholder' => 'Email',
+            'value' => $user['email']
+        ],'Email');
+
+        $form->input([
+            'class' => 'btn btn-success btn-send',
+            'name' => 'update-email',
+            'type' => 'submit',
+            'value' => 'Update'
+        ]);
+
+        $this->view->title = 'EditEmail';
+        $this->view->editForm = $form->get();
+        $this->view->render('users');
+    }
+
+    public function updateEmail($id)
+    {
+        $users = new Users();
+
+        if(isset($_POST['update-email'])){
+            $email = $_POST['email'];
+            $users->updateEmail($email, $id);
+        }
+
+        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/show/".$id);
+    }
+
+    public function editPassword($id)
+    {
+        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/users/updatePassword/'.$id);
+        $users = new Users();
+        $user = $users->getUserById($id);
+        $user = $user->fetch_assoc();
+
+        $form->input([
+            'class' => 'form-control col-md-6',
+            'name' => 'password',
+            'type' => 'password',
+            'placeholder' => 'New password'
+        ],'New password');
+
+        $form->input([
+            'class' => 'form-control col-md-6',
+            'name' => 'rpassword',
+            'type' => 'password',
+            'placeholder' => 'Repeat new password'
+        ],'Repeat new password');
+        
+
+        $form->input([
+            'class' => 'btn btn-success btn-send',
+            'name' => 'update-password',
+            'type' => 'submit',
+            'value' => 'Update'
+        ]);
+
+        $this->view->title = 'EditPassword';
+        $this->view->editForm = $form->get();
+        $this->view->render('users');
+    }
+
+    public function updatePassword($id)
+    {
+        $users = new Users();
+
+        if(isset($_POST['update-password'])){
+            $password = $_POST['password'];
+            $rpassword = $_POST['rpassword'];
+
+            if(isset($password) && isset($rpassword) && $password == $rpassword){
+                $passwordHash = Helper::generatePassword($password);
+                $users->updatePassword($passwordHash, $id);
+            }
+        }
+
+        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/show/".$id);
+    }
+
 }
