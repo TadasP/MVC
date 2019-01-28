@@ -41,14 +41,33 @@
         </div>
         <?php if(isset($this->comments)): ?>
         <div class="row">
-                <div class="col-lg-12">
-                        <?php foreach($this->comments as $comment): ?>
-                                <div class="post" style="background-color:#e5e5e5; border-radius:.3rem; margin:10px auto;">
-                                <h3></h3>
+                <?php $i = 0; ?>
+                <?php foreach($this->comments as $comment): ?>
+                        <?php if($i == 0): ?>
+                        <div class="col-lg-6">
+                                <div class="post  float-left" style="background-color:#e5e5e5; border-radius:.3rem; margin:10px auto; min-width:600px;">
+                                <?php if($_SESSION['email'] == $comment['email']): ?>
+                                        <a href="http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/comments/editComment/<?= $comment['id'] ?>"><button type="button" class="btn btn-sm float-right mr-2">Edit</button></a>
+                                <?php endif; ?>
+                                <h3 style="width:98%;"><?= $comment['name']?></h3>
                                 <p style="padding:10px 10px"><?= $comment['content']?></p>
+                                
+                                <?php $i++; ?>
                                 </div>
-                        <?php endforeach ?>
                         </div>
+                        <?php else: ?>
+                        <div class="col-lg-12">
+                                <div class="post  float-right" style="background-color:#e5e5e5; border-radius:.3rem; margin:10px auto; min-width:600px; ">
+                                <?php if($_SESSION['email'] == $comment['email']): ?>
+                                        <a href="http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/comments/editComment/<?= $comment['id'] ?>"><button type="button" class="btn btn-sm float-right mr-2">Edit</button></a>
+                                <?php endif; ?>
+                                <h3 style="width:98%;"><?= $comment['name']?></h3>
+                                <p style="padding:10px 10px"><?= $comment['content']?></p>
+                                <?php $i = 0; ?>
+                                </div>
+                        </div>
+                        <?php endif; ?>
+                <?php endforeach ?>
                 </div>
         </div>
         <?php endif; ?>

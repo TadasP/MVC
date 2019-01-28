@@ -99,12 +99,17 @@ class Database
         $this->query .='OR '.$field.' '.$operator.' '.$value.' ';
         return $this;
     }
+
+    public function joinOn($table, $row1, $row2)
+    {
+        $this->query .=' INNER JOIN '.$table.' ON '.$row1.'='.$row2.' ';
+        return $this;
+    }
+
     
     public function get(){
         $conn = $this->connect();
         $result = mysqli_query($this->conn, $this->query);
         return $result;
     }
-
-    //"SELECT * FROM comments JOIN users ON user_id = author_id WHERE post_id = $id"
 }

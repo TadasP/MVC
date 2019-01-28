@@ -63,7 +63,7 @@ class Posts
     public function getAllCommentsByPostId($id)
     {
         $db = new Database();
-        $db->select()->from('comments')->where('post_id', $id);
+        $db->select('comments.id, comments.content, users.name, users.email')->from('comments')->joinOn('users','comments.author_id','users.id')->where('post_id',$id);
         return $db->get();
     }
 

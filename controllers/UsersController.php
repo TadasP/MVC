@@ -133,7 +133,7 @@ class UsersController extends Controller
             }
         }
 
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/index");
+        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/login");
     }
 
     public function login()

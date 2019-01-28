@@ -45,10 +45,10 @@ class PostsController extends Controller
     
         $commentsView = [];
         $author_ids = [];
-        
         while($comment = $comments->fetch_assoc()){
             $commentsView[] =  $comment;
         }
+
         $this->view->comments = $commentsView;
 
         $this->view->render('posts');
