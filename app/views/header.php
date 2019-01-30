@@ -3,7 +3,7 @@
         <?php if(isset($this->title)) {?>
         <title><?php echo $this->title ?></title>
         <?php }else{ ?>
-        <title>404</title>
+        <title>Untitled Page</title>
         <?php } ?>
         <link rel="stylesheet" type="text/css" href="/2lvl/Tadas/Model-view-controler/app/views/css/error.css">
         <link rel="stylesheet" type="text/css" href="/2lvl/Tadas/Model-view-controler/app/views/css/content.css">
@@ -59,8 +59,8 @@
                 <?php endif; ?>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" method="POST" action="/2lvl/Tadas/Model-view-controler/index.php/posts/searchPost">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <input class="form-control mr-sm-2" type="search" name="search_needle" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="search_posts">Search</button>
                 </form>
             </div>
             </nav>

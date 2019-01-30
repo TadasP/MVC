@@ -23,11 +23,14 @@ header,
   margin-bottom:10px;
 }
 
-.post h3{
-  width:100px;
+.post h5{
   margin:auto;
 }
 
 .hide {
   display: none;
+}
+
+.comment-name{
+  margin-left:10px;
 }

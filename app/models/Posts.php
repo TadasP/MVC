@@ -16,7 +16,7 @@ class Posts
     public function getPostById($id)
     {
         $db = new Database();
-        $db->select('posts.id, posts.title, posts.content, posts.photo, posts.author_id, users.name')
+        $db->select('posts.id, posts.title, posts.content, posts.photo, posts.createtime, posts.author_id, users.name')
             ->from('posts')
             ->joinOn('users','posts.author_id','users.id')
             ->where('posts.id',$id)
@@ -88,6 +88,16 @@ class Posts
     {
         $db = new Database();
         $db->select('name')->from('users')->where('id', $id);
+        return $db->get();
+    }
+
+    public function getAllPostsBySearchNeedle($searchInput)
+    {
+        $db = new Database();
+        $db->select()
+            ->from('posts')
+            ->like('title',$searchInput, '%', '%')
+            ->likeOr('content',$searchInput, '%', '%');
         return $db->get();
     }
 }

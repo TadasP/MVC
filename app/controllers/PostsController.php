@@ -45,7 +45,6 @@ class PostsController extends Controller
             $comments = $posts->getAllCommentsByPostId($id['id']);
         }
 
-    
         $commentsView = [];
         
         while($comment = $comments->fetch_assoc()){
@@ -61,7 +60,7 @@ class PostsController extends Controller
                 'class' => 'form-control col-md-6',
                 'name' => 'comment',
                 'rows' => 8,
-                'placeholder' => 'Comment'
+                'placeholder' => 'New comment'
             ]);
 
             $form->input([
@@ -123,11 +122,6 @@ class PostsController extends Controller
         $this->view->title = 'Add';
         $this->view->form = $form->get();
         $this->view->render('posts');
-    }
-
-    public function searchPost()
-    {
-        
     }
 
     public function storePost()
@@ -228,4 +222,31 @@ class PostsController extends Controller
         header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/index");
     }
 
+    public function searchPost()
+    {
+        $posts = new Posts();
+        $resultsView = [];
+
+        if(isset($_POST['search_posts'])){
+            $searchNeedle = !empty($_POST['search_needle']) ? $_POST['search_needle'] : NULL;
+            if(!empty($_POST['search_needle'])){
+                $searchNeedle = strtolower($searchNeedle);
+                $SearchResults = $posts->getAllPostsBySearchNeedle($searchNeedle);
+                if(mysqli_num_rows($SearchResults) > 0){
+                    while($post = $SearchResults->fetch_assoc()){
+                        $resultsView[] = $post;
+                    }
+                    $this->view->positiveSearchResults = $resultsView;
+                }else{
+                    $this->view->negativeSearchResults = '0 results';
+                }
+           }else{
+                $this->view->negativeSearchResults = '0 results';    
+           }         
+        } 
+
+        $this->view->needle = $searchNeedle;
+        $this->view->title = 'Search Results';
+        $this->view->render('posts');  
+    }
 }

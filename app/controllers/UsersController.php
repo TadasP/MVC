@@ -206,6 +206,7 @@ class UsersController extends Controller
     {
         unset($_SESSION['loggedIn']);
         unset($_SESSION['email']);
+        session_destroy();
 
         header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/index/index");
     }

@@ -104,7 +104,19 @@ class Database
 
     public function joinOn($table, $row1, $row2)
     {
-        $this->query .=' INNER JOIN '.$table.' ON '.$row1.'='.$row2.' ';
+        $this->query .='INNER JOIN '.$table.' ON '.$row1.'='.$row2.' ';
+        return $this;
+    }
+
+    public function like($haystack, $needle, $operator1='%', $operator2='%')
+    {
+        $this->query .='WHERE lower('.$haystack.') LIKE '.'"'.$operator1.$needle.$operator2.'"';
+        return $this;
+    }
+
+    public function likeOr($haystack, $needle, $operator1='%', $operator2='%')
+    {
+        $this->query .='OR lower('.$haystack.') LIKE '.'"'.$operator1.$needle.$operator2.'"';
         return $this;
     }
 
