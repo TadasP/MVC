@@ -1,6 +1,8 @@
 <?php
 
-include_once url.'libs/Controller.php';
+namespace App\Controllers;
+
+use App\Libs\Controller;
 
 class ErrorController extends Controller
 {

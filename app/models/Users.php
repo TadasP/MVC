@@ -1,6 +1,8 @@
 <?php
 
-include_once url.'libs/Database.php';
+namespace App\Models;
+
+use App\Libs\Database;
 
 class Users
 {

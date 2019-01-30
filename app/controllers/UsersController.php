@@ -1,9 +1,11 @@
 <?php
 
-include_once url.'libs/Controller.php';
-include_once url.'models/Users.php';
-include_once url.'helpers/FormHelper.php';
-include_once url.'helpers/Helper.php';
+namespace App\Controllers;
+
+use App\Libs\Controller;
+use App\Models\Users;
+use App\Helpers\FormHelper;
+use App\Helpers\Helper;
 
 class UsersController extends Controller
 {

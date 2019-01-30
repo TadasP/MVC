@@ -1,6 +1,9 @@
 <?php
 
 session_start();
+
+require_once('vendor/autoload.php');
+
 define('url','/wamp/www/2lvl/Tadas/Model-view-controler/');
 
 if (isset($_SERVER['PATH_INFO'])){
@@ -17,9 +20,9 @@ if (isset($_SERVER['PATH_INFO'])){
         $classFile = ucfirst($controller).'Controller';
     }
 
-    if(file_exists('controllers/'.$classFile.'.php')){
-        include_once 'controllers/'.$classFile.'.php';
-        $object = new $classFile;
+    if(file_exists('app/controllers/'.$classFile.'.php')){
+        $class = 'App\Controllers\\'.$classFile;
+        $object = new $class;
         if(!empty($obj_method)){
             $method = $obj_method;
             if(method_exists($object, $method) && !empty($var)){
@@ -28,8 +31,8 @@ if (isset($_SERVER['PATH_INFO'])){
                 $object->$method();
             }else{
                 $classFile = 'ErrorController';
-                include_once 'controllers/'.$classFile.'.php';
-                $object = new $classFile;
+                $class = 'App\Controllers\\'.$classFile;
+                $object = new $class;
                 $object->showError('Method not found');
             }
         }else{
@@ -37,13 +40,13 @@ if (isset($_SERVER['PATH_INFO'])){
         }
     }else{
         $classFile = 'ErrorController';
-        include_once 'controllers/'.$classFile.'.php';
-        $object = new $classFile;
-        $object->showError('Page Not Found');
+        $class = 'App\Controllers\\'.$classFile;
+        $object = new $class;
+        $object->showError('Page not found');
     }
 }else{
     $classFile = 'IndexController';
-    include_once 'controllers/'.$classFile.'.php';
-    $object = new $classFile;
+    $class = 'App\Controllers\\'.$classFile;
+    $object = new $class;
     $object->index();
 }

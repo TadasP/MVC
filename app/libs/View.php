@@ -1,8 +1,10 @@
 <?php
 
+namespace App\Libs;
+
 class View
 {
-    private $viewCatalogPath = url.'views/';
+    private $viewCatalogPath = url.'app/views/';
 
     public function render($templatePath)
     {

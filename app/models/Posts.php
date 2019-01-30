@@ -1,6 +1,8 @@
 <?php
 
-include_once url.'libs/Database.php';
+namespace App\Models;
+
+use App\Libs\Database;
 
 class Posts
 {
@@ -14,7 +16,11 @@ class Posts
     public function getPostById($id)
     {
         $db = new Database();
-        $db->select()->from('posts')->where('id',$id);
+        $db->select('posts.id, posts.title, posts.content, posts.photo, posts.author_id, users.name')
+            ->from('posts')
+            ->joinOn('users','posts.author_id','users.id')
+            ->where('posts.id',$id)
+            ->whereAnd('posts.active', 1);
         return $db->get();
     }
 
@@ -63,7 +69,11 @@ class Posts
     public function getAllCommentsByPostId($id)
     {
         $db = new Database();
-        $db->select('comments.id, comments.content, users.name, users.email')->from('comments')->joinOn('users','comments.author_id','users.id')->where('post_id',$id);
+        $db->select('comments.id, comments.content, users.name, users.email')
+            ->from('comments')
+            ->joinOn('users','comments.author_id','users.id')
+            ->where('post_id',$id)
+            ->whereAnd('comments.active', 1);
         return $db->get();
     }
 

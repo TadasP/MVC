@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Libs;
+
 class Database
 {
     private $conn;

@@ -1,43 +1,24 @@
 <?php
 
-include_once url.'libs/Controller.php';
-include_once url.'models/Comments.php';
-include_once url.'helpers/FormHelper.php';
-include_once url.'helpers/Helper.php';
+namespace App\Controllers;
+
+use App\Libs\Controller;
+use App\Models\Comments;
+use App\Helpers\FormHelper;
+use App\Helpers\Helper;
 
 class CommentsController extends Controller
 {
-    public function addComment($postId)
-    {
-        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/comments/storeComment/'.$postId);
-
-        $form->textarea([
-            'class' => 'form-control col-md-6',
-            'name' => 'comment',
-            'rows' => 8,
-            'placeholder' => 'Comment'
-        ]);
-
-        $form->input([
-            'class' => 'btn btn-success btn-send',
-            'name' => 'submit',
-            'type' => 'submit',
-            'value' => 'Add'
-        ]);
-
-        $this->view->title = 'Add Comment';
-        $this->view->form = $form->get();
-        $this->view->render('comments');
-    }
-
     public function storeComment($postId)
     {   
         $comments = new Comments();
 
         if(isset($_POST['submit'])){
             $author_id = $_SESSION['loggedIn'];
-            $content = $_POST['comment'];
-            $comments->addComment($author_id, $postId, $content);
+            $content = !empty($_POST['comment']) ? $_POST['comment'] : NULL;
+            if(isset($content)){
+                $comments->addComment($author_id, $postId, $content);
+            }
         }
 
         header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/show/".$postId);
@@ -79,6 +60,17 @@ class CommentsController extends Controller
             $content = $_POST['comment'];
             $comments->updateComment($id, $content);
         }
+
+        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/show/".$info['post_id']);
+    }
+
+    public function deleteComment($id)
+    {
+        $comments = new Comments();
+        $comment = $comments->getCommentById($id);
+        $info = $comment->fetch_assoc();
+
+        $comments->deleteComment($id);
 
         header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/show/".$info['post_id']);
     }

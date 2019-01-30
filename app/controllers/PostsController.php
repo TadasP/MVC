@@ -1,9 +1,11 @@
 <?php
 
-include_once url.'libs/Controller.php';
-include_once url.'models/Posts.php';
-include_once url.'helpers/FormHelper.php';
-include_once url.'helpers/Helper.php';
+namespace App\Controllers;
+
+use App\Libs\Controller;
+use App\Models\Posts;
+use App\Helpers\FormHelper;
+use App\Helpers\Helper;
 
 class PostsController extends Controller
 {
@@ -34,6 +36,7 @@ class PostsController extends Controller
         $postView = $post->fetch_assoc();
         $this->view->post = $postView;
 
+        
         if(is_numeric($var)){
             $comments = $posts->getAllCommentsByPostId($var);
         }else{
@@ -44,13 +47,33 @@ class PostsController extends Controller
 
     
         $commentsView = [];
-        $author_ids = [];
+        
         while($comment = $comments->fetch_assoc()){
             $commentsView[] =  $comment;
         }
 
         $this->view->comments = $commentsView;
 
+        if(isset($_SESSION['loggedIn'])){
+            $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/comments/storeComment/'.$var);
+
+            $form->textarea([
+                'class' => 'form-control col-md-6',
+                'name' => 'comment',
+                'rows' => 8,
+                'placeholder' => 'Comment'
+            ]);
+
+            $form->input([
+                'class' => 'btn btn-success btn-send',
+                'name' => 'submit',
+                'type' => 'submit',
+                'value' => 'Add'
+            ]);
+
+        $this->view->commentForm = $form->get();
+        }
+        
         $this->view->render('posts');
     }
 
@@ -102,6 +125,11 @@ class PostsController extends Controller
         $this->view->render('posts');
     }
 
+    public function searchPost()
+    {
+        
+    }
+
     public function storePost()
     {
         $posts = new Posts();
@@ -121,7 +149,7 @@ class PostsController extends Controller
 
     public function edit($id)
     {
-        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/posts/update/'.$id);
+        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/posts/updatePost/'.$id);
         $posts = new Posts();
         $post = $posts->getPostById($id);
         $info = $post->fetch_assoc();

@@ -1,6 +1,8 @@
 <?php
 
-include_once url.'libs/Database.php';
+namespace App\Models;
+
+use App\Libs\Database;
 
 class Comments
 {
@@ -28,6 +30,17 @@ class Comments
             ->set([
             '`content`' => $content
             ])  
+            ->where('id',$id);
+        return $db->get();
+    }
+
+    public function deleteComment($id)
+    {
+        $db = new Database();
+        $db->update('comments')
+            ->set([
+            '`active`' => 0,
+            ])
             ->where('id',$id);
         return $db->get();
     }
