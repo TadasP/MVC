@@ -130,4 +130,14 @@ class Users
         return $db->get();
     }
     
+    public function addPhoto($photo, $id)
+    {
+        $db = new Database();
+        $db->update('users')
+            ->set([
+            '`photo`' => $photo
+            ])  
+            ->where('id',$id);
+        return $db->get();
+    }
 }

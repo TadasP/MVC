@@ -19,10 +19,10 @@ class Helper
 
     public static function highlightNeedle($str,$search)
     {
-        $highlightcolor = "#daa732";
+        $highlightcolor = "	#FF4500";
         $occurrences = substr_count(strtolower($str), strtolower($search));
         $newstring = $str;
-        $match = array();
+        $match = [];
         
         for ($i=0;$i<$occurrences;$i++) {
             $match[$i] = stripos($str, $search, $i);

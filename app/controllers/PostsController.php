@@ -54,7 +54,7 @@ class PostsController extends Controller
         $this->view->comments = $commentsView;
 
         if(isset($_SESSION['loggedIn'])){
-            $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/comments/storeComment/'.$var);
+            $form = new FormHelper('POST','/2lvl/Tadas/MVC/index.php/comments/storeComment/'.$var);
 
             $form->textarea([
                 'class' => 'form-control col-md-6',
@@ -78,7 +78,7 @@ class PostsController extends Controller
 
     public function add()
     {
-        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/posts/storePost');
+        $form = new FormHelper('POST','/2lvl/Tadas/MVC/index.php/posts/storePost');
        
         $form->input([
             'class' => 'form-control col-md-6',
@@ -138,12 +138,12 @@ class PostsController extends Controller
             $posts->addPost($slug, $title, $content, $photo, $time, $author_id);
         }
 
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/index");
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/posts/index");
     }
 
     public function edit($id)
     {
-        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/posts/updatePost/'.$id);
+        $form = new FormHelper('POST','/2lvl/Tadas/MVC/index.php/posts/updatePost/'.$id);
         $posts = new Posts();
         $post = $posts->getPostById($id);
         $info = $post->fetch_assoc();
@@ -208,7 +208,7 @@ class PostsController extends Controller
             $posts->updatePost($id, $slug, $title, $content, $photo, $time);
         }
 
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/index");
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/posts/index");
     }
 
     public function deletePost($id)
@@ -219,7 +219,7 @@ class PostsController extends Controller
             $posts->deletePost($id);
         }
 
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/index");
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/posts/index");
     }
 
     public function searchPost()
@@ -231,9 +231,9 @@ class PostsController extends Controller
             $searchNeedle = !empty($_POST['search_needle']) ? $_POST['search_needle'] : NULL;
             if(!empty($_POST['search_needle'])){
                 $searchNeedle = strtolower($searchNeedle);
-                $SearchResults = $posts->getAllPostsBySearchNeedle($searchNeedle);
-                if(mysqli_num_rows($SearchResults) > 0){
-                    while($post = $SearchResults->fetch_assoc()){
+                $searchResults = $posts->getAllPostsBySearchNeedle($searchNeedle);
+                if(mysqli_num_rows($searchResults) > 0){
+                    while($post = $searchResults->fetch_assoc()){
                         $resultsView[] = $post;
                     }
                     $this->view->positiveSearchResults = $resultsView;

@@ -4,7 +4,7 @@ session_start();
 
 require_once('vendor/autoload.php');
 
-define('url','/wamp/www/2lvl/Tadas/Model-view-controler/');
+define('url','/wamp/www/2lvl/Tadas/MVC/');
 
 if (isset($_SERVER['PATH_INFO'])){
     $path = strtolower(str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['REQUEST_URI']));

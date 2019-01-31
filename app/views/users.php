@@ -14,8 +14,8 @@
                 <?php foreach($this->users as $user): ?>
                         <div class="col-md-2">
                                 <div class="thumbnail" style="margin-top:10px;">
-                                        <a href="/2lvl/Tadas/Model-view-controler/index.php/users/show/<?= $user['id']?>">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/Simpleicons_Interface_user-black-close-up-shape.svg" alt="Lights" style="width:100%">
+                                        <a href="/2lvl/Tadas/MVC/index.php/users/show/<?= $user['id']?>">
+                                <img style="width:160px; height:160px;" src="<?= $user['photo'] ?>" alt="Lights" style="width:100%">
                                 <div class="user-name">
                                         <p style="text-align:center;"><?= $user['name']?></p>
                                 </div>
@@ -36,12 +36,13 @@
                                 <?php if($this->user['id'] === $_SESSION['loggedIn']): ?>
                                         <div class="user" style="background-color:#e5e5e5; border-radius:.3rem;">
                                                 <div class="info" style="padding-left:10px;">
-                                                        <p id="userName">Name: <?= $this->user['name']?><span class="float-right" style="padding-right:10px;"><a href="http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/editName/<?= $this->user['id'] ?>">Edit</a></span></p>
-                                                        <p id="userEmail">Email: <?= $this->user['email']?><span class="float-right" style="padding-right:10px;"><a href="http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/editEmail/<?= $this->user['id'] ?>">Edit</a></span></p>
-                                                        <p id="userPassword">Password: <?= $this->user['password']?><span class="float-right" style="padding-right:10px;"><a href="http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/editPassword/<?= $this->user['id'] ?>">Edit</a></span></p>
+                                                        <p id="userName">Name: <?= $this->user['name']?><span class="float-right" style="padding-right:10px;"><a href="http://localhost:8081/2lvl/Tadas/MVC/index.php/users/editName/<?= $this->user['id'] ?>">Edit</a></span></p>
+                                                        <p id="userEmail">Email: <?= $this->user['email']?><span class="float-right" style="padding-right:10px;"><a href="http://localhost:8081/2lvl/Tadas/MVC/index.php/users/editEmail/<?= $this->user['id'] ?>">Edit</a></span></p>
+                                                        <p>Password:<span class="float-right" style="padding-right:10px;"><a href="http://localhost:8081/2lvl/Tadas/MVC/index.php/users/editPassword/<?= $this->user['id'] ?>">Change</a></span></p>
+                                                        <p>Photo:<span class="float-right" style="padding-right:10px;"><a href="http://localhost:8081/2lvl/Tadas/MVC/index.php/users/addPhoto/<?= $this->user['id'] ?>">Add</a></span></p>
                                                 </div>
-                                        <form method="POST" action="http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/deleteUser/<?= $this->user['id'] ?>" class="float-right">
-                                                <input type="submit" name="delete-user" class="btn btn-danger btn-sm btn-send confirm-delete" value="Delete">
+                                        <form method="POST" action="http://localhost:8081/2lvl/Tadas/MVC/index.php/users/deleteUser/<?= $this->user['id'] ?>" class="float-right">
+                                                <input type="submit" name="delete-user" class="btn btn-danger btn-sm btn-send confirm-delete" value="Delete Account">
                                         </form>
                                         </div>
                                 <?php endif; ?>
@@ -75,7 +76,7 @@
                         <h1>User Posts: </h1>
                         <?php foreach($this->posts as $post): ?>
                                 <div class="post" style="background-color:#e5e5e5; border-radius:.3rem; margin:40px auto;">
-                                <h3 style="text-align:center;"><a href="/2lvl/Tadas/Model-view-controler/index.php/posts/show/<?= $post['id'] ?>"><?= $post['title']?></a></h3>
+                                <h3 style="text-align:center;"><a href="/2lvl/Tadas/MVC/index.php/posts/show/<?= $post['id'] ?>"><?= $post['title']?></a></h3>
                                 <p style="padding-left:5px"><?= $post['content']?></p>
                                 </div>
                         <?php endforeach ?>

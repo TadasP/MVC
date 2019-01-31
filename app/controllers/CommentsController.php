@@ -21,12 +21,12 @@ class CommentsController extends Controller
             }
         }
 
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/show/".$postId);
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/posts/show/".$postId);
     }
 
     public function editComment($commentId)
     {
-        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/comments/updateComment/'.$commentId);
+        $form = new FormHelper('POST','/2lvl/Tadas/MVC/index.php/comments/updateComment/'.$commentId);
         $comments = new Comments();
         $comment = $comments->getCommentById($commentId);
         $info = $comment->fetch_assoc();
@@ -61,7 +61,7 @@ class CommentsController extends Controller
             $comments->updateComment($id, $content);
         }
 
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/show/".$info['post_id']);
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/posts/show/".$info['post_id']);
     }
 
     public function deleteComment($id)
@@ -72,6 +72,6 @@ class CommentsController extends Controller
 
         $comments->deleteComment($id);
 
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/posts/show/".$info['post_id']);
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/posts/show/".$info['post_id']);
     }
 }

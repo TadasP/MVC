@@ -54,7 +54,7 @@ class UsersController extends Controller
 
     public function registration()
     {
-        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/users/storeUser');
+        $form = new FormHelper('POST','/2lvl/Tadas/MVC/index.php/users/storeUser');
 
         $form->input([
             'id' => 'registrationName',
@@ -120,27 +120,27 @@ class UsersController extends Controller
                         $posts->registrate($name, $email, $passwordHash);
                     }else{
                         $_SESSION['error'] = 'Slaptažodžiai nesutampa';
-                        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/registration");
+                        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/registration");
                         die();
                     }
                 }else{
                     $_SESSION['error'] = 'Norimas vardas arba emailas užimtas';
-                    header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/registration");
+                    header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/registration");
                     die();
                 }
             }else{
                 $_SESSION['error'] = 'Užpildykite visus laukeliu';
-                header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/registration");
+                header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/registration");
                 die();
             }
         }
 
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/login");
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/login");
     }
 
     public function login()
     {
-        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/users/loginUser');
+        $form = new FormHelper('POST','/2lvl/Tadas/MVC/index.php/users/loginUser');
 
         $form->input([
             'class' => 'form-control col-md-6',
@@ -190,16 +190,16 @@ class UsersController extends Controller
                     $_SESSION['email'] = $email['email'];            
                 }else{
                     $_SESSION['error'] = 'Neteisingas emailas arba slaptažodis';
-                    header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/login");  
+                    header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/login");  
                     die();  
                 }
             }else{
                 $_SESSION['error'] = 'Užpildykite visus laukeliu';
-                header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/login");
+                header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/login");
                 die();    
             }
         }   
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/index");    
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/index");    
     }
 
     public function logout()
@@ -208,7 +208,7 @@ class UsersController extends Controller
         unset($_SESSION['email']);
         session_destroy();
 
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/index/index");
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/index/index");
     }
 
     public function deleteUser($id)
@@ -222,12 +222,12 @@ class UsersController extends Controller
         unset($_SESSION['loggedIn']);
         unset($_SESSION['email']);
 
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/index");
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/index");
     }
 
     public function editName($id)
     {
-        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/users/updateName/'.$id);
+        $form = new FormHelper('POST','/2lvl/Tadas/MVC/index.php/users/updateName/'.$id);
         $users = new Users();
         $user = $users->getUserById($id);
         $user = $user->fetch_assoc();
@@ -261,12 +261,12 @@ class UsersController extends Controller
             $users->updateName($name, $id);
         }
 
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/show/".$id);
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/show/".$id);
     }
 
     public function editEmail($id)
     {
-        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/users/updateEmail/'.$id);
+        $form = new FormHelper('POST','/2lvl/Tadas/MVC/index.php/users/updateEmail/'.$id);
         $users = new Users();
         $user = $users->getUserById($id);
         $user = $user->fetch_assoc();
@@ -300,12 +300,12 @@ class UsersController extends Controller
             $users->updateEmail($email, $id);
         }
 
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/show/".$id);
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/show/".$id);
     }
 
     public function editPassword($id)
     {
-        $form = new FormHelper('POST','/2lvl/Tadas/Model-view-controler/index.php/users/updatePassword/'.$id);
+        $form = new FormHelper('POST','/2lvl/Tadas/MVC/index.php/users/updatePassword/'.$id);
         $users = new Users();
         $user = $users->getUserById($id);
         $user = $user->fetch_assoc();
@@ -351,7 +351,45 @@ class UsersController extends Controller
             }
         }
 
-        header("Location: http://localhost:8081/2lvl/Tadas/Model-view-controler/index.php/users/show/".$id);
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/show/".$id);
+    }
+
+    public function addPhoto($id)
+    {
+        $form = new FormHelper('POST','/2lvl/Tadas/MVC/index.php/users/storePhoto/'.$id);
+        $users = new Users();
+        $user = $users->getUserById($id);
+        $user = $user->fetch_assoc();
+
+        $form->input([
+            'class' => 'form-control col-md-6',
+            'name' => 'photo_url',
+            'type' => 'text',
+            'placeholder' => 'Photo URL'
+        ],'Email');
+
+        $form->input([
+            'class' => 'btn btn-success btn-send',
+            'name' => 'add-photo',
+            'type' => 'submit',
+            'value' => 'Update'
+        ]);
+
+        $this->view->title = 'Add Photo';
+        $this->view->editForm = $form->get();
+        $this->view->render('users');
+    }
+
+    public function storePhoto($id)
+    {
+        $users = new Users();
+
+        if(isset($_POST['add-photo'])){
+            $photo = $_POST['photo_url'];
+            $users->addPhoto($photo, $id);
+        }
+
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/show/".$id);
     }
 
 }
