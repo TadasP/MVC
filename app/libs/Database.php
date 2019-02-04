@@ -120,8 +120,33 @@ class Database
         return $this;
     }
 
+    public function prepareAndBind($operators, $values)
+    {
+        $conn = mysqli_connect('localhost', 'root', '', 'mvc_php');
+        $statement = $conn->prepare($this->query);
+        if(count($values) == 6){
+            $statement->bind_param($operators, $values[0], $values[1], $values[2], $values[3], $values[4], $values[5]);    
+        }elseif(count($values) == 5){
+            $statement->bind_param($operators, $values[0], $values[1], $values[2], $values[3], $values[4]);
+        }elseif(count($values) == 4){
+            $statement->bind_param($operators, $values[0], $values[1], $values[2], $values[3]);
+        }elseif(count($values) == 3){
+            $statement->bind_param($operators, $values[0], $values[1], $values[2]);
+        }elseif(count($values) == 2){
+            $statement->bind_param($operators, $values[0], $values[1]);
+        }else{
+            $statement->bind_param($operators, $values[0]);   
+        }
+        $statement->execute();
+    }
+
+    public function getQuery()
+    {
+        return $this->query;
+    }
     
-    public function get(){
+    public function get()
+    {
         $conn = $this->connect();
         $result = mysqli_query($this->conn, $this->query);
         return $result;

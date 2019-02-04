@@ -38,7 +38,7 @@ class Posts
             ->into('posts')
             ->row(['`slug`','`title`','`content`','`photo`','`createtime`','`author_id`'])
             ->value([$slug, $title, $content, $photo, $time, $author_id]);
-        return $db->get();    
+        return $db->get();
     }
 
     public function updatePost($id, $slug, $title, $content, $photo, $time)

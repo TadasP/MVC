@@ -102,7 +102,7 @@ class UsersController extends Controller
 
     public function storeUser()
     {
-        $posts = new Users();
+        $users = new Users();
 
         if(isset($_POST['registrate'])){
             $name = !empty($_POST['name']) ? $_POST['name'] : NULL;
@@ -111,13 +111,13 @@ class UsersController extends Controller
             $rpassword = !empty($_POST['rpassword']) ? $_POST['rpassword'] : NULL;
 
             if(isset($name) && isset($email) && isset($password) && isset($rpassword)){
-                $nameCheck = $posts->getUserByName($name);
-                $emailCheck = $posts->getUserByEmail($email);
+                $nameCheck = $users->getUserByName($name);
+                $emailCheck = $users->getUserByEmail($email);
                 if (!mysqli_num_rows($nameCheck) > 0 && !mysqli_num_rows($emailCheck) > 0){
 
                     if($password === $rpassword){
                         $passwordHash = Helper::generatePassword($password);
-                        $posts->registrate($name, $email, $passwordHash);
+                        $users->registrate($name, $email, $passwordHash);
                     }else{
                         $_SESSION['error'] = 'Slaptažodžiai nesutampa';
                         header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/registration");
@@ -135,7 +135,18 @@ class UsersController extends Controller
             }
         }
 
-        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/users/login");
+        $validation = $users->getUserInfoByEmail($email, $passwordHash);
+
+        if (mysqli_num_rows($validation) > 0){
+            $id = $users->getUserIdByEmail($email);
+            $id = $id->fetch_assoc();     
+            $_SESSION['loggedIn'] = $id['id'];
+            $email = $users->getUserById($id['id']);
+            $email = $email->fetch_assoc();
+            $_SESSION['email'] = $email['email'];            
+        }
+
+        header("Location: http://localhost:8081/2lvl/Tadas/MVC/index.php/index/index");
     }
 
     public function login()
